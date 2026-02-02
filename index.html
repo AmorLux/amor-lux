@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Amor Lux</title>
     <style>
-        /* Устраняем проблемы с высотой и рамкой */
         html, body {
             height: 100%;
             margin: 0;
@@ -17,43 +16,44 @@
             align-items: center;
         }
 
-        /* Двойная рамка с отступом от краев, чтобы низ не пропадал */
+        /* Исправленная рамка: четкие границы со всех сторон */
         body::before {
             content: "";
             position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
             border: 4px double #D4AF37;
             pointer-events: none;
             box-sizing: border-box;
+            z-index: 10;
         }
         
         .top-bar {
             position: absolute;
-            top: 45px;
-            width: calc(100% - 80px);
+            top: 50px;
+            width: calc(100% - 90px);
             display: flex;
             justify-content: space-between;
-            max-width: 320px;
+            max-width: 300px;
             color: #D4AF37;
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 1px;
             text-transform: uppercase;
+            z-index: 5;
         }
-        .online-dot { color: #D4AF37; margin-right: 5px; }
 
         .c { 
             width: 100%; 
-            max-width: 320px; 
+            max-width: 300px; 
             text-align: center; 
             z-index: 1;
-            margin-top: -60px; /* Поднимаем весь блок выше */
+            margin-top: -80px; /* Еще выше подняли заголовок */
         }
 
         .l { 
-            font-size: 42px; 
+            font-size: 40px; 
             color: #D4AF37; 
             letter-spacing: 5px; 
             margin: 0; 
@@ -65,17 +65,17 @@
             color: rgba(212, 175, 55, 0.4); 
             font-size: 10px; 
             letter-spacing: 3px; 
-            margin: 5px 0 60px 0; /* Увеличили отступ до инпутов */
+            margin: 5px 0 60px 0; 
             text-transform: uppercase; 
         }
         
         input { 
             width: 100%; 
-            padding: 18px; 
+            padding: 16px; 
             margin-bottom: 12px; 
             background: #121212; 
             border: 1px solid #333; 
-            border-radius: 12px; 
+            border-radius: 10px; 
             color: white; 
             box-sizing: border-box; 
             outline: none; 
@@ -96,12 +96,11 @@
         }
         
         .bg { margin-top: 20px; }
-        .bo { margin-top: 5px; }
     </style>
 </head>
 <body>
     <div class="top-bar">
-        <span><span class="online-dot">●</span> Online</span>
+        <span><span style="color:#D4AF37">●</span> Online</span>
         <span>Язык: RU</span>
     </div>
     <div class="c">
@@ -110,7 +109,7 @@
         <input type="email" placeholder="Email">
         <input type="password" placeholder="Пароль">
         <button class="bg">ВХОД</button>
-        <button class="bo">РЕГИСТРАЦИЯ</button>
+        <button style="margin-top:5px">РЕГИСТРАЦИЯ</button>
     </div>
 </body>
 </html>
