@@ -27,8 +27,8 @@
 
     <div id="login-form" class="c">
         <div class="l">AMOR LUX</div><div class="s">LUXURY DATING</div>
-        <input type="email" id="log-email" placeholder="Email">
-        <input type="password" id="log-pass" placeholder="Пароль">
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Пароль">
         <button onclick="goToProfile()">ВХОД</button>
         <button onclick="show('reg-step-1')">РЕГИСТРАЦИЯ</button>
     </div>
@@ -45,7 +45,7 @@
         <input type="text" id="reg-city" placeholder="Город">
         <button onclick="document.getElementById('photo-input').click()" style="color:#D4AF37">+ ВЫБРАТЬ ФОТО</button>
         <input type="file" id="photo-input" class="hidden" accept="image/*" onchange="previewFile()">
-        <button onclick="goToProfile()">ЗАВЕРШИТЬ</button>
+        <button onclick="goToProfile()">СОХРАНИТЬ</button>
     </div>
 
     <div id="profile-screen" class="c hidden">
@@ -60,15 +60,14 @@
 
     <div id="search-screen" class="c hidden">
         <div class="card"><div class="card-info"><b style="color:#D4AF37">Елена, 22</b><br><small>Москва</small></div></div>
-        <button onclick="alert('Лайк!')" style="color:#D4AF37">❤ ЛАЙК</button>
+        <button onclick="alert('Лайк отправлен!')" style="color:#D4AF37">❤ ЛАЙК</button>
         <button onclick="show('profile-screen')" style="color:#555">НАЗАД</button>
     </div>
 
     <script>
         function show(id) {
             document.querySelectorAll('.c').forEach(el => el.classList.add('hidden'));
-            const target = document.getElementById(id);
-            if (target) target.classList.remove('hidden');
+            document.getElementById(id).classList.remove('hidden');
         }
         
         function previewFile() {
