@@ -16,14 +16,14 @@
             align-items: center;
         }
 
-        /* Исправленная рамка: четкие границы со всех сторон */
+        /* Идеальная двойная рамка с отступом снизу */
         body::before {
             content: "";
             position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 30px;
             border: 4px double #D4AF37;
             pointer-events: none;
             box-sizing: border-box;
@@ -32,8 +32,8 @@
         
         .top-bar {
             position: absolute;
-            top: 50px;
-            width: calc(100% - 90px);
+            top: 60px;
+            width: calc(100% - 100px);
             display: flex;
             justify-content: space-between;
             max-width: 300px;
@@ -49,7 +49,7 @@
             max-width: 300px; 
             text-align: center; 
             z-index: 1;
-            margin-top: -80px; /* Еще выше подняли заголовок */
+            margin-top: -100px;
         }
 
         .l { 
@@ -94,8 +94,17 @@
             letter-spacing: 2px;
             font-size: 14px;
         }
-        
-        .bg { margin-top: 20px; }
+
+        /* Ссылка Забыли пароль */
+        .forgot {
+            display: block;
+            margin-top: 20px;
+            color: rgba(212, 175, 55, 0.6);
+            font-size: 11px;
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
@@ -108,8 +117,9 @@
         <div class="s">LUXURY DATING</div>
         <input type="email" placeholder="Email">
         <input type="password" placeholder="Пароль">
-        <button class="bg">ВХОД</button>
-        <button style="margin-top:5px">РЕГИСТРАЦИЯ</button>
+        <button style="margin-top: 20px;">ВХОД</button>
+        <button style="margin-top: 5px;">РЕГИСТРАЦИЯ</button>
+        <a href="#" class="forgot">Забыли пароль?</a>
     </div>
 </body>
 </html>
