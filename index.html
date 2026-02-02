@@ -2,30 +2,37 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Amor Lux</title>
     <style>
+        /* Устраняем проблемы с высотой и рамкой */
         html, body {
-            height: 100vh;
+            height: 100%;
             margin: 0;
+            padding: 0;
             background: #1A1A1A;
             overflow: hidden;
-        }
-        body {
-            color: white;
-            font-family: sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-sizing: border-box;
-            /* Двойная золотая рамка по всему периметру */
+        }
+
+        /* Двойная рамка с отступом от краев, чтобы низ не пропадал */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
             border: 4px double #D4AF37;
-            padding: 20px;
+            pointer-events: none;
+            box-sizing: border-box;
         }
         
         .top-bar {
             position: absolute;
-            top: 40px;
+            top: 45px;
             width: calc(100% - 80px);
             display: flex;
             justify-content: space-between;
@@ -37,10 +44,30 @@
         }
         .online-dot { color: #D4AF37; margin-right: 5px; }
 
-        .c { width: 100%; max-width: 320px; text-align: center; }
-        .crown { color: #D4AF37; font-size: 24px; margin-bottom: 10px; }
-        .l { font-size: 42px; color: #D4AF37; letter-spacing: 5px; margin: 0; font-weight: 200; text-transform: uppercase; }
-        .s { color: rgba(212, 175, 55, 0.4); font-size: 10px; letter-spacing: 3px; margin: 5px 0 50px 0; text-transform: uppercase; }
+        .c { 
+            width: 100%; 
+            max-width: 320px; 
+            text-align: center; 
+            z-index: 1;
+            margin-top: -60px; /* Поднимаем весь блок выше */
+        }
+
+        .l { 
+            font-size: 42px; 
+            color: #D4AF37; 
+            letter-spacing: 5px; 
+            margin: 0; 
+            font-weight: 200; 
+            text-transform: uppercase; 
+        }
+
+        .s { 
+            color: rgba(212, 175, 55, 0.4); 
+            font-size: 10px; 
+            letter-spacing: 3px; 
+            margin: 5px 0 60px 0; /* Увеличили отступ до инпутов */
+            text-transform: uppercase; 
+        }
         
         input { 
             width: 100%; 
@@ -52,12 +79,12 @@
             color: white; 
             box-sizing: border-box; 
             outline: none; 
+            font-size: 16px;
         }
 
-        /* Кнопки: без рамок, только золотой текст */
         button {
             width: 100%; 
-            padding: 18px; 
+            padding: 15px; 
             background: transparent; 
             border: none; 
             color: #D4AF37; 
@@ -66,10 +93,9 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             font-size: 14px;
-            outline: none;
         }
         
-        .bg { margin-top: 15px; }
+        .bg { margin-top: 20px; }
         .bo { margin-top: 5px; }
     </style>
 </head>
@@ -79,7 +105,6 @@
         <span>Язык: RU</span>
     </div>
     <div class="c">
-        <div class="crown">👑</div>
         <div class="l">AMOR LUX</div>
         <div class="s">LUXURY DATING</div>
         <input type="email" placeholder="Email">
