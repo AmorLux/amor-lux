@@ -6,23 +6,38 @@
     <title>Amor Lux</title>
     <style>
         html, body { height: 100%; margin: 0; padding: 0; background: #1A1A1A; overflow: hidden; display: flex; justify-content: center; align-items: center; color: white; font-family: sans-serif; }
-        body::before { content: ""; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 4px double #D4AF37; pointer-events: none; z-index: 10; }
+        
+        body::before { 
+            content: ""; 
+            position: absolute; 
+            top: 5px; 
+            left: 5px; 
+            right: 5px; 
+            bottom: 5px; 
+            border: 4px double #D4AF37; 
+            pointer-events: none; 
+            z-index: 10; 
+        }
+
         .top-bar { position: absolute; top: 30px; width: calc(100% - 50px); display: flex; justify-content: space-between; max-width: 320px; color: #D4AF37; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; z-index: 5; }
-        .c { width: 100%; max-width: 300px; text-align: center; z-index: 1; margin-top: -50px; transition: 0.5s; }
+        .c { width: 100%; max-width: 300px; text-align: center; z-index: 1; margin-top: -80px; transition: 0.5s; }
         .l { font-size: 36px; color: #D4AF37; letter-spacing: 5px; margin: 0; font-weight: 200; text-transform: uppercase; }
         .s { color: rgba(212, 175, 55, 0.4); font-size: 10px; letter-spacing: 3px; margin: 5px 0 40px 0; text-transform: uppercase; }
+        
         input, select { width: 100%; padding: 16px; margin-bottom: 12px; background: #121212; border: 1px solid #333; border-radius: 10px; color: white; box-sizing: border-box; outline: none; font-size: 16px; }
-        button { width: 100%; padding: 15px; background: transparent; border: none; color: #D4AF37; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; }
-        .file-label { display: block; width: 100%; padding: 16px; margin-bottom: 12px; background: #121212; border: 1px dashed #D4AF37; border-radius: 10px; color: #D4AF37; cursor: pointer; text-transform: uppercase; font-size: 12px; }
+        
+        button, .file-label { width: 100%; padding: 15px; background: transparent; border: none; color: #D4AF37; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; outline: none; display: block; box-sizing: border-box; }
+        
+        .file-label { margin-bottom: 12px; font-size: 14px; } /* Убрали border и padding-box */
+
         .hidden { display: none; }
         
-        /* Стили профиля */
-        .profile-pic { width: 120px; height: 120px; border-radius: 50%; border: 2px solid #D4AF37; margin: 0 auto 20px; background: #222; display: flex; align-items: center; justify-content: center; font-size: 40px; }
-        .user-info { font-size: 18px; margin-bottom: 5px; color: #D4AF37; }
-        .user-city { font-size: 12px; color: #777; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-menu { margin-top: 40px; border-top: 1px solid #333; padding-top: 20px; }
-        .nav-item { display: block; padding: 12px; color: #aaa; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-item:hover { color: #D4AF37; }
+        .profile-pic { width: 120px; height: 120px; border-radius: 50%; border: 4px double #D4AF37; margin: 0 auto 20px; background: #222; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+        .user-info { font-size: 20px; margin-bottom: 5px; color: #D4AF37; text-transform: uppercase; letter-spacing: 1px; }
+        .user-city { font-size: 12px; color: #777; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px; }
+        
+        .nav-menu { border-top: 1px solid #333; padding-top: 20px; }
+        .nav-item { display: block; width: 100%; padding: 15px; color: #aaa; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; background: transparent; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -45,7 +60,7 @@
         <div class="s">ШАГ 1 ИЗ 2</div>
         <input type="text" id="reg-name" placeholder="Ваше имя">
         <input type="number" id="reg-age" placeholder="Возраст">
-        <select><option disabled selected>Ваш пол</option><option>Мужчина</option><option>Женщина</option></select>
+        <select id="reg-gender"><option disabled selected>Ваш пол</option><option>Мужчина</option><option>Женщина</option></select>
         <button onclick="showReg2()">ПРОДОЛЖИТЬ</button>
     </div>
 
@@ -57,15 +72,15 @@
         <button onclick="showProfile()">ЗАВЕРШИТЬ</button>
     </div>
 
-    <div id="profile-screen" class="c hidden">
+    <div id="profile-screen" class="c hidden" style="margin-top: 0;">
         <div class="profile-pic">👤</div>
-        <div class="user-info" id="display-name">АЛЕКСАНДР, 25</div>
-        <div class="user-city" id="display-city">МОСКВА</div>
+        <div class="user-info" id="display-name">ПОЛЬЗОВАТЕЛЬ</div>
+        <div id="display-city" class="user-city">ГОРОД</div>
         
         <div class="nav-menu">
-            <a href="#" class="nav-item">💎 Поиск партнеров</a>
-            <a href="#" class="nav-item">✉ Сообщения</a>
-            <a href="#" class="nav-item">⚙ Настройки</a>
+            <button class="nav-item" onclick="alert('Раздел Поиск в разработке')">💎 Поиск партнеров</button>
+            <button class="nav-item" onclick="alert('Раздел Сообщения в разработке')">✉ Сообщения</button>
+            <button class="nav-item" onclick="alert('Раздел Настройки в разработке')">⚙ Настройки</button>
             <button onclick="showLogin()" style="color: #555; font-size: 10px; margin-top: 10px;">ВЫЙТИ</button>
         </div>
     </div>
