@@ -11,15 +11,13 @@
         .c { width: 100%; max-width: 300px; text-align: center; z-index: 1; transition: 0.3s; }
         .l { font-size: 36px; color: #D4AF37; letter-spacing: 5px; margin: 0; font-weight: 200; text-transform: uppercase; }
         .s { color: rgba(212, 175, 55, 0.4); font-size: 10px; letter-spacing: 3px; margin: 5px 0 40px 0; text-transform: uppercase; }
-        input, select { width: 100%; padding: 16px; margin-bottom: 12px; background: #121212; border: 1px solid #333; border-radius: 10px; color: white; box-sizing: border-box; outline: none; font-size: 16px; }
+        input { width: 100%; padding: 16px; margin-bottom: 12px; background: #121212; border: 1px solid #333; border-radius: 10px; color: white; box-sizing: border-box; outline: none; font-size: 16px; }
         button { width: 100%; padding: 15px; background: transparent; border: none; color: #D4AF37; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; display: block; }
         .hidden { display: none !important; }
         .profile-pic { width: 120px; height: 120px; border-radius: 50%; border: 4px double #D4AF37; margin: 0 auto 20px; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
         .nav-menu { border-top: 1px solid #333; padding-top: 20px; margin-top: 20px; }
         .nav-item { padding: 15px; color: #aaa; text-transform: uppercase; letter-spacing: 2px; font-size: 13px; cursor: pointer; background: none; border: none; width: 100%; }
-        .card { width: 100%; height: 380px; background: #222; border-radius: 15px; border: 1px solid #D4AF37; margin-bottom: 10px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 50px; }
-        .card-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, black); text-align: left; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -35,14 +33,14 @@
 
     <div id="reg-step-1" class="c hidden">
         <div class="l" style="font-size: 24px;">РЕГИСТРАЦИЯ</div><div class="s">ШАГ 1 ИЗ 2</div>
-        <input type="text" id="reg-name" placeholder="Имя">
-        <input type="number" id="reg-age" placeholder="Возраст">
+        <input type="text" id="reg-name" placeholder="Имя" oninput="saveData()">
+        <input type="number" id="reg-age" placeholder="Возраст" oninput="saveData()">
         <button onclick="show('reg-step-2')">ПРОДОЛЖИТЬ</button>
     </div>
 
     <div id="reg-step-2" class="c hidden">
         <div class="l" style="font-size: 24px;">РЕГИСТРАЦИЯ</div><div class="s">ШАГ 2 ИЗ 2</div>
-        <input type="text" id="reg-city" placeholder="Город">
+        <input type="text" id="reg-city" placeholder="Город" oninput="saveData()">
         <button onclick="document.getElementById('photo-input').click()" style="color:#D4AF37">+ ВЫБРАТЬ ФОТО</button>
         <input type="file" id="photo-input" class="hidden" accept="image/*" onchange="previewFile()">
         <button onclick="goToProfile()">СОХРАНИТЬ</button>
@@ -53,18 +51,27 @@
         <div id="display-name" style="color: #D4AF37; font-size: 20px;">ИМЯ</div>
         <div id="display-city" style="color: #777; font-size: 12px; margin-bottom: 20px;">ГОРОД</div>
         <div class="nav-menu">
-            <button class="nav-item" onclick="show('search-screen')">💎 ПОИСК</button>
-            <button class="nav-item" onclick="location.reload()">ВЫЙТИ</button>
+            <button class="nav-item" onclick="alert('Поиск в разработке')">💎 ПОИСК</button>
+            <button class="nav-item" onclick="localStorage.clear(); location.reload()">ВЫЙТИ</button>
         </div>
     </div>
 
-    <div id="search-screen" class="c hidden">
-        <div class="card"><div class="card-info"><b style="color:#D4AF37">Елена, 22</b><br><small>Москва</small></div></div>
-        <button onclick="alert('Лайк отправлен!')" style="color:#D4AF37">❤ ЛАЙК</button>
-        <button onclick="show('profile-screen')" style="color:#555">НАЗАД</button>
-    </div>
-
     <script>
+        // Загрузка данных при старте
+        window.onload = () => {
+            if(localStorage.getItem('reg-name')) {
+                document.getElementById('reg-name').value = localStorage.getItem('reg-name');
+                document.getElementById('reg-age').value = localStorage.getItem('reg-age');
+                document.getElementById('reg-city').value = localStorage.getItem('reg-city');
+            }
+        };
+
+        function saveData() {
+            localStorage.setItem('reg-name', document.getElementById('reg-name').value);
+            localStorage.setItem('reg-age', document.getElementById('reg-age').value);
+            localStorage.setItem('reg-city', document.getElementById('reg-city').value);
+        }
+
         function show(id) {
             document.querySelectorAll('.c').forEach(el => el.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
@@ -75,7 +82,9 @@
             if (!file) return;
             const reader = new FileReader();
             reader.onloadend = () => {
-                document.getElementById('avatar-container').innerHTML = `<img src="${reader.result}">`;
+                const imgTag = `<img src="${reader.result}">`;
+                document.getElementById('avatar-container').innerHTML = imgTag;
+                localStorage.setItem('user-photo', reader.result);
             };
             reader.readAsDataURL(file);
         }
