@@ -6,12 +6,28 @@
     <title>Amor Lux</title>
     <style>
         html, body { height: 100%; margin: 0; padding: 0; background: #1A1A1A; overflow: hidden; display: flex; justify-content: center; align-items: center; color: white; font-family: sans-serif; }
-        body::before { content: ""; position: absolute; top: 20px; left: 20px; right: 20px; bottom: 30px; border: 4px double #D4AF37; pointer-events: none; z-index: 10; }
-        .top-bar { position: absolute; top: 60px; width: calc(100% - 100px); display: flex; justify-content: space-between; max-width: 300px; color: #D4AF37; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; z-index: 5; }
-        .c { width: 100%; max-width: 300px; text-align: center; z-index: 1; margin-top: -100px; transition: 0.5s; }
+        
+        /* Двойная тонкая рамка, 4px суммарно, вплотную к краям */
+        body::before { 
+            content: ""; 
+            position: absolute; 
+            top: 5px; 
+            left: 5px; 
+            right: 5px; 
+            bottom: 5px; 
+            border: 4px double #D4AF37; 
+            pointer-events: none; 
+            z-index: 10; 
+        }
+
+        .top-bar { position: absolute; top: 30px; width: calc(100% - 50px); display: flex; justify-content: space-between; max-width: 320px; color: #D4AF37; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; z-index: 5; }
+        
+        .c { width: 100%; max-width: 300px; text-align: center; z-index: 1; margin-top: -80px; transition: 0.5s; }
         .l { font-size: 40px; color: #D4AF37; letter-spacing: 5px; margin: 0; font-weight: 200; text-transform: uppercase; }
         .s { color: rgba(212, 175, 55, 0.4); font-size: 10px; letter-spacing: 3px; margin: 5px 0 50px 0; text-transform: uppercase; }
-        input, select { width: 100%; padding: 16px; margin-bottom: 12px; background: #121212; border: 1px solid #333; border-radius: 10px; color: white; box-sizing: border-box; outline: none; font-size: 16px; appearance: none; }
+        
+        input, select { width: 100%; padding: 16px; margin-bottom: 12px; background: #121212; border: 1px solid #333; border-radius: 10px; color: white; box-sizing: border-box; outline: none; font-size: 16px; }
+        
         button { width: 100%; padding: 15px; background: transparent; border: none; color: #D4AF37; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; }
         .forgot { display: block; margin-top: 20px; color: rgba(212, 175, 55, 0.6); font-size: 11px; text-decoration: none; text-transform: uppercase; }
         .hidden { display: none; }
@@ -37,7 +53,7 @@
         <div class="l" style="font-size: 30px;">СОЗДАТЬ АККАУНТ</div>
         <div class="s" style="margin-bottom: 30px;">ШАГ 1 ИЗ 2</div>
         <input type="text" placeholder="Ваше имя">
-        <select>
+        <select style="background: #121212; color: #aaa;">
             <option value="" disabled selected>Ваш пол</option>
             <option value="male">Мужчина</option>
             <option value="female">Женщина</option>
