@@ -3,28 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Amor Lux v4.0</title>
+    <title>Amor Lux v4.1</title>
     <style>
         html, body { height: 100%; margin: 0; padding: 0; background: #1A1A1A; overflow: hidden; display: flex; justify-content: center; align-items: center; color: white; font-family: sans-serif; }
         body::before { content: ""; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 4px double #D4AF37; pointer-events: none; z-index: 10; }
         .top-bar { position: absolute; top: 30px; width: calc(100% - 50px); display: flex; justify-content: space-between; align-items: center; max-width: 320px; color: #D4AF37; z-index: 20; }
         .back-btn { font-size: 28px; cursor: pointer; padding: 10px; visibility: hidden; }
-        .c { width: 100%; max-width: 300px; text-align: center; z-index: 1; position: absolute; transition: 0.4s ease-in-out; }
+        .c { width: 100%; max-width: 300px; text-align: center; z-index: 1; position: absolute; transition: 0.3s; }
         .l { font-size: 36px; color: #D4AF37; letter-spacing: 5px; margin: 0; font-weight: 200; text-transform: uppercase; }
         .s { color: rgba(212, 175, 55, 0.4); font-size: 10px; letter-spacing: 3px; margin: 5px 0 40px 0; text-transform: uppercase; }
         input { width: 100%; padding: 16px; margin-bottom: 12px; background: #121212; border: 1px solid #333; border-radius: 10px; color: white; box-sizing: border-box; outline: none; }
         button { width: 100%; padding: 15px; background: transparent; border: none; color: #D4AF37; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; display: block; }
         .btn-gold { border: 1px solid #D4AF37; border-radius: 10px; margin-top: 10px; }
-        .hidden { display: none !important; opacity: 0; transform: scale(0.9); }
+        .hidden { display: none !important; }
+        
         .profile-pic { width: 120px; height: 120px; border-radius: 50%; border: 4px double #D4AF37; margin: 0 auto 20px; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* Карточка поиска */
-        .card { width: 100%; height: 380px; background: #222; border-radius: 15px; border: 1px solid #D4AF37; margin-bottom: 10px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 60px; }
+        /* Стили карточки */
+        .card { width: 100%; height: 360px; background: #222; border-radius: 15px; border: 1px solid #D4AF37; margin-bottom: 15px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 80px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .card-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); text-align: left; box-sizing: border-box; }
-        .card-name { color: #D4AF37; font-size: 22px; font-weight: bold; }
+        .card-name { color: #D4AF37; font-size: 20px; font-weight: bold; }
         .card-city { color: #aaa; font-size: 12px; }
-        .actions { display: flex; gap: 10px; }
+        .actions { display: flex; gap: 10px; width: 100%; }
     </style>
 </head>
 <body>
@@ -32,30 +33,27 @@
 
     <div id="login-form" class="c">
         <div class="l">AMOR LUX</div><div class="s">LUXURY DATING</div>
-        <input type="email" placeholder="Email"><input type="password" placeholder="Пароль">
-        <button onclick="showScreen('profile-screen')">ВХОД</button>
+        <button class="btn-gold" onclick="showScreen('profile-screen')">ВХОД</button>
         <button onclick="showScreen('reg-step-1')">РЕГИСТРАЦИЯ</button>
     </div>
 
     <div id="reg-step-1" class="c hidden">
         <div class="l" style="font-size: 24px;">РЕГИСТРАЦИЯ</div><div class="s">ШАГ 1 ИЗ 2</div>
-        <input type="text" id="reg-name" placeholder="Имя"><input type="number" id="reg-age" placeholder="Возраст">
-        <button class="btn-gold" onclick="showScreen('reg-step-2')">ПРОДОЛЖИТЬ</button>
+        <input type="text" id="reg-name" placeholder="Имя">
+        <button class="btn-gold" onclick="showScreen('reg-step-2')">ДАЛЕЕ</button>
     </div>
 
     <div id="reg-step-2" class="c hidden">
         <div class="l" style="font-size: 24px;">РЕГИСТРАЦИЯ</div><div class="s">ШАГ 2 ИЗ 2</div>
         <input type="text" id="reg-city" placeholder="Город">
-        <button onclick="document.getElementById('ph').click()">ВЫБРАТЬ ФОТО</button>
-        <input type="file" id="ph" class="hidden" onchange="p(this)">
         <button class="btn-gold" onclick="save()">СОХРАНИТЬ</button>
     </div>
 
     <div id="profile-screen" class="c hidden">
         <div class="profile-pic" id="av">👤</div>
-        <div id="dn" style="color:#D4AF37; font-size:20px;">USER</div>
+        <div id="dn" style="color:#D4AF37; font-size:20px; margin-bottom: 30px;">USER</div>
         <button class="btn-gold" onclick="startSearch()">💎 ПОИСК ПАРТНЕРОВ</button>
-        <button class="btn-gold" onclick="alert('У вас пока нет новых сообщений')">✉ СООБЩЕНИЯ</button>
+        <button class="btn-gold" onclick="alert('Сообщений пока нет')">✉ СООБЩЕНИЯ</button>
         <button onclick="location.reload()" style="color:#555; margin-top:20px;">ВЫЙТИ</button>
     </div>
 
@@ -68,8 +66,8 @@
             </div>
         </div>
         <div class="actions">
-            <button class="btn-gold" onclick="nextUser()" style="color:#555; border-color:#333">✕</button>
-            <button class="btn-gold" onclick="likeUser()">❤ ЛАЙК</button>
+            <button class="btn-gold" onclick="nextUser()" style="color:#555; border-color:#333; flex:1">✕</button>
+            <button class="btn-gold" onclick="likeUser()" style="flex:2">❤ ЛАЙК</button>
         </div>
     </div>
 
@@ -78,40 +76,54 @@
         const users = [
             {n: "Елена, 22", c: "Москва", e: "👸"},
             {n: "Анна, 25", c: "Сочи", e: "💃"},
-            {n: "Мария, 21", c: "Киев", e: "✨"},
-            {n: "Виктория, 24", c: "Минск", e: "💎"}
+            {n: "Кристина, 21", c: "Казань", e: "✨"},
+            {n: "Марина, 23", c: "СПб", e: "💎"}
         ];
         let curU = 0;
 
         function showScreen(id) {
             document.querySelectorAll('.c').forEach(e => e.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-            document.getElementById('back-icon').style.visibility = (id === 'login-form') ? 'hidden' : 'visible';
-            if(st[st.length-1] !== id) st.push(id);
+            const target = document.getElementById(id);
+            if (target) {
+                target.classList.remove('hidden');
+                document.getElementById('back-icon').style.visibility = (id === 'login-form' || id === 'profile-screen') ? 'hidden' : 'visible';
+                if(st[st.length-1] !== id) st.push(id);
+            }
         }
-        function goBack() { if(st.length > 1) { st.pop(); showScreen(st[st.length-1]); } }
-        function p(input) {
-            const r = new FileReader();
-            r.onload = (e) => { document.getElementById('av').innerHTML = `<img src="${e.target.result}">`; };
-            r.readAsDataURL(input.files[0]);
+
+        function goBack() {
+            if(st.length > 1) {
+                st.pop();
+                showScreen(st[st.length-1]);
+            }
         }
+
         function save() {
-            document.getElementById('dn').innerText = (document.getElementById('reg-name').value || "USER").toUpperCase();
+            const name = document.getElementById('reg-name').value || "USER";
+            document.getElementById('dn').innerText = name.toUpperCase();
             showScreen('profile-screen');
         }
-        function startSearch() { curU = 0; updateCard(); showScreen('search-screen'); }
+
+        function startSearch() {
+            curU = 0;
+            updateCard();
+            showScreen('search-screen');
+        }
+
         function updateCard() {
             const u = users[curU];
             document.getElementById('cn').innerText = u.n;
             document.getElementById('cc').innerText = u.c;
             document.getElementById('card-emoji').innerText = u.e;
         }
+
         function nextUser() {
             curU = (curU + 1) % users.length;
             updateCard();
         }
+
         function likeUser() {
-            alert("Это взаимно! Она добавлена в ваши контакты.");
+            alert("Это взаимно! Сообщение отправлено.");
             nextUser();
         }
     </script>
