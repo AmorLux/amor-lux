@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Amor Lux v5.0</title>
+    <title>Amor Lux v6.0</title>
     <style>
         html, body { height: 100%; margin: 0; padding: 0; background: #1A1A1A; overflow: hidden; display: flex; justify-content: center; align-items: center; color: white; font-family: sans-serif; }
         body::before { content: ""; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 4px double #D4AF37; pointer-events: none; z-index: 10; }
@@ -15,24 +15,29 @@
         input { width: 100%; padding: 16px; margin-bottom: 12px; background: #121212; border: 1px solid #333; border-radius: 10px; color: white; box-sizing: border-box; outline: none; }
         button { width: 100%; padding: 15px; background: transparent; border: none; color: #D4AF37; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; display: block; }
         .btn-gold { border: 1px solid #D4AF37; border-radius: 10px; margin-top: 10px; }
-        .hidden { display: none !important; opacity: 0; }
+        .hidden { display: none !important; }
         
-        .profile-pic { width: 120px; height: 120px; border-radius: 50%; border: 4px double #D4AF37; margin: 0 auto 20px; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .profile-pic { width: 100px; height: 100px; border-radius: 50%; border: 3px double #D4AF37; margin: 0 auto 15px; background: #222; overflow: hidden; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* Дизайн карточек в поиске */
-        .card { width: 100%; height: 400px; background: #222; border-radius: 20px; border: 1px solid #D4AF37; margin-bottom: 15px; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.7); animation: fadeIn 0.5s; }
+        /* Поиск */
+        .card { width: 100%; height: 380px; background: #222; border-radius: 20px; border: 1px solid #D4AF37; margin-bottom: 15px; position: relative; overflow: hidden; animation: fadeIn 0.5s; }
         .card img { width: 100%; height: 100%; object-fit: cover; }
-        .card-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 25px 15px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); text-align: left; box-sizing: border-box; }
-        .card-name { color: #D4AF37; font-size: 22px; font-weight: bold; text-shadow: 1px 1px 2px black; }
-        .card-city { color: #ddd; font-size: 13px; margin-top: 4px; }
+        .card-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); text-align: left; box-sizing: border-box; }
         
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .actions { display: flex; gap: 15px; width: 100%; }
+        /* Список сообщений */
+        .chat-list { text-align: left; margin-top: 20px; max-height: 400px; overflow-y: auto; }
+        .chat-item { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #333; cursor: pointer; animation: fadeIn 0.3s; }
+        .chat-avatar { width: 50px; height: 50px; border-radius: 50%; border: 1px solid #D4AF37; margin-right: 15px; overflow: hidden; }
+        .chat-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .chat-name { color: #D4AF37; font-size: 14px; font-weight: bold; }
+        .chat-last { color: #777; font-size: 11px; margin-top: 4px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
-    <div class="top-bar"><div id="back-icon" class="back-btn" onclick="goBack()">←</div><div style="font-size:10px">VERSION 5.0</div></div>
+    <div class="top-bar"><div id="back-icon" class="back-btn" onclick="goBack()">←</div><div style="font-size:10px">AMOR LUX PRO</div></div>
 
     <div id="login-form" class="c">
         <div class="l">AMOR LUX</div><div class="s">LUXURY DATING</div>
@@ -41,89 +46,87 @@
     </div>
 
     <div id="reg-step-1" class="c hidden">
-        <div class="l" style="font-size: 24px;">РЕГИСТРАЦИЯ</div><div class="s">ИМЯ</div>
-        <input type="text" id="reg-name" placeholder="Введите имя...">
-        <button class="btn-gold" onclick="showScreen('reg-step-2')">ДАЛЕЕ</button>
-    </div>
-
-    <div id="reg-step-2" class="c hidden">
-        <div class="l" style="font-size: 24px;">РЕГИСТРАЦИЯ</div><div class="s">ЛОКАЦИЯ</div>
-        <input type="text" id="reg-city" placeholder="Ваш город...">
-        <button class="btn-gold" onclick="save()">СОХРАНИТЬ</button>
+        <div class="l" style="font-size: 24px;">ИМЯ</div><input type="text" id="reg-name" placeholder="Как вас зовут?">
+        <button class="btn-gold" onclick="showScreen('profile-screen'); saveName()">СОХРАНИТЬ</button>
     </div>
 
     <div id="profile-screen" class="c hidden">
         <div class="profile-pic" id="av">👤</div>
-        <div id="dn" style="color:#D4AF37; font-size:20px; margin-bottom: 30px; letter-spacing: 2px;">USER</div>
+        <div id="dn" style="color:#D4AF37; font-size:18px; margin-bottom: 20px;">USER</div>
         <button class="btn-gold" onclick="startSearch()">💎 ПОИСК ПАРТНЕРОВ</button>
-        <button class="btn-gold" onclick="alert('У вас пока нет новых сообщений')">✉ СООБЩЕНИЯ</button>
+        <button class="btn-gold" onclick="showChats()">✉ СООБЩЕНИЯ (<span id="chat-count">0</span>)</button>
         <button onclick="location.reload()" style="color:#555; margin-top:20px;">ВЫЙТИ</button>
     </div>
 
     <div id="search-screen" class="c hidden">
         <div class="card" id="user-card">
             <img id="card-img" src="" alt="Photo">
-            <div class="card-info">
-                <div class="card-name" id="cn">Елена, 22</div>
-                <div class="card-city" id="cc">Москва</div>
+            <div class="card-info"><div style="color:#D4AF37; font-size:20px;" id="cn">Елена</div><div style="font-size:12px; color:#ccc" id="cc">Москва</div></div>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn-gold" onclick="nextUser()" style="flex:1; border-color:#444; color:#777">✕</button>
+            <button class="btn-gold" onclick="likeUser()" style="flex:2;">❤ ЛАЙК</button>
+        </div>
+    </div>
+
+    <div id="chat-screen" class="c hidden">
+        <div class="l" style="font-size: 20px;">СООБЩЕНИЯ</div>
+        <div class="chat-list" id="chat-items">
             </div>
-        </div>
-        <div class="actions">
-            <button class="btn-gold" onclick="nextUser()" style="color:#777; border-color:#444; flex:1">✕</button>
-            <button class="btn-gold" onclick="likeUser()" style="flex:2; background: rgba(212,175,55,0.1)">❤ ЛАЙК</button>
-        </div>
+        <button onclick="showScreen('profile-screen')" style="color:#D4AF37; margin-top:20px;">НАЗАД В ПРОФИЛЬ</button>
     </div>
 
     <script>
         let st = ['login-form'];
+        let matchedUsers = [];
         const users = [
-            {n: "Елена, 22", c: "Москва", i: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80"},
-            {n: "Анна, 25", c: "Сочи", i: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80"},
-            {n: "Кристина, 21", c: "Казань", i: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"},
-            {n: "Марина, 23", c: "СПб", i: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"}
+            {n: "Елена, 22", c: "Москва", i: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400"},
+            {n: "Анна, 25", c: "Сочи", i: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400"},
+            {n: "Кристина, 21", c: "Казань", i: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400"},
+            {n: "Марина, 23", c: "СПб", i: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400"}
         ];
         let curU = 0;
 
         function showScreen(id) {
             document.querySelectorAll('.c').forEach(e => e.classList.add('hidden'));
-            const target = document.getElementById(id);
-            if (target) {
-                target.classList.remove('hidden');
-                document.getElementById('back-icon').style.visibility = (id === 'login-form' || id === 'profile-screen') ? 'hidden' : 'visible';
-                if(st[st.length-1] !== id) st.push(id);
-            }
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById('back-icon').style.visibility = (id === 'login-form' || id === 'profile-screen') ? 'hidden' : 'visible';
+            if(st[st.length-1] !== id) st.push(id);
         }
-
         function goBack() { if(st.length > 1) { st.pop(); showScreen(st[st.length-1]); } }
-
-        function save() {
-            const name = document.getElementById('reg-name').value || "USER";
-            document.getElementById('dn').innerText = name.toUpperCase();
-            showScreen('profile-screen');
-        }
-
+        function saveName() { document.getElementById('dn').innerText = (document.getElementById('reg-name').value || "USER").toUpperCase(); }
         function startSearch() { curU = 0; updateCard(); showScreen('search-screen'); }
-
         function updateCard() {
-            const u = users[curU];
-            const card = document.getElementById('user-card');
-            card.style.animation = 'none';
-            card.offsetHeight; /* триггер рефлоу для перезапуска анимации */
-            card.style.animation = 'fadeIn 0.5s';
-            
-            document.getElementById('cn').innerText = u.n;
-            document.getElementById('cc').innerText = u.c;
-            document.getElementById('card-img').src = u.i;
+            document.getElementById('cn').innerText = users[curU].n;
+            document.getElementById('cc').innerText = users[curU].c;
+            document.getElementById('card-img').src = users[curU].i;
         }
-
-        function nextUser() {
-            curU = (curU + 1) % users.length;
-            updateCard();
-        }
-
+        function nextUser() { curU = (curU + 1) % users.length; updateCard(); }
+        
         function likeUser() {
-            alert("Это взаимно! Она добавлена в список ваших симпатий.");
+            const user = users[curU];
+            if (!matchedUsers.find(u => u.n === user.n)) {
+                matchedUsers.push(user);
+                document.getElementById('chat-count').innerText = matchedUsers.length;
+                alert("Это взаимно! " + user.n.split(',')[0] + " ждет вашего сообщения.");
+            }
             nextUser();
+        }
+
+        function showChats() {
+            const container = document.getElementById('chat-items');
+            container.innerHTML = matchedUsers.length === 0 ? '<div style="color:#555; text-align:center; margin-top:20px;">Пока пусто. Лайкните кого-нибудь в поиске!</div>' : '';
+            matchedUsers.forEach(u => {
+                container.innerHTML += `
+                    <div class="chat-item">
+                        <div class="chat-avatar"><img src="${u.i}"></div>
+                        <div>
+                            <div class="chat-name">${u.n}</div>
+                            <div class="chat-last">Привет! У нас взаимная симпатия...</div>
+                        </div>
+                    </div>`;
+            });
+            showScreen('chat-screen');
         }
     </script>
 </body>
