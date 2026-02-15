@@ -3,88 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Amor Lux Elite Fixed</title>
+    <title>Amor Lux Elite Registration</title>
     <style>
         html, body { height: 100%; margin: 0; padding: 0; background: #1A1A1A; overflow: hidden; display: flex; justify-content: center; align-items: center; color: white; font-family: sans-serif; }
         body::before { content: ""; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 4px double #D4AF37; pointer-events: none; z-index: 10; }
         .top-bar { position: absolute; top: 30px; width: calc(100% - 50px); display: flex; justify-content: space-between; align-items: center; max-width: 320px; color: #D4AF37; z-index: 25; }
         .back-btn { font-size: 28px; cursor: pointer; padding: 10px; visibility: hidden; }
-        .c { width: 100%; max-width: 300px; text-align: center; z-index: 1; position: absolute; transition: 0.5s ease; }
-        .l { font-size: 36px; color: #D4AF37; letter-spacing: 5px; margin: 0; font-weight: 200; text-transform: uppercase; }
-        .s { color: rgba(212, 175, 55, 0.4); font-size: 10px; letter-spacing: 3px; margin: 5px 0 40px 0; text-transform: uppercase; }
-        input { width: 100%; padding: 16px; background: #121212; border: 1px solid #333; border-radius: 10px; color: white; box-sizing: border-box; outline: none; margin-bottom: 10px; }
-        button { width: 100%; padding: 15px; background: transparent; border: none; color: #D4AF37; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; display: block; }
-        .btn-gold { border: 1px solid #D4AF37; border-radius: 10px; margin-top: 10px; }
-        .hidden { display: none !important; }
+        .c { width: 100%; max-width: 300px; text-align: center; z-index: 1; position: absolute; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .l { font-size: 32px; color: #D4AF37; letter-spacing: 5px; margin: 0; font-weight: 200; text-transform: uppercase; }
+        .s { color: rgba(212, 175, 55, 0.4); font-size: 10px; letter-spacing: 3px; margin: 5px 0 30px 0; text-transform: uppercase; }
         
-        .profile-pic { width: 130px; height: 130px; border-radius: 50%; border: 3px double #D4AF37; margin: 0 auto 20px; position: relative; cursor: pointer; overflow: hidden; background: #222; display: flex; align-items: center; justify-content: center; }
+        /* Стили полей */
+        input { width: 100%; padding: 16px; background: #121212; border: 1px solid #333; border-radius: 12px; color: white; box-sizing: border-box; outline: none; margin-bottom: 15px; transition: 0.3s; }
+        input:focus { border-color: #D4AF37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+        
+        button { width: 100%; padding: 15px; background: transparent; border: none; color: #D4AF37; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: 13px; display: block; }
+        .btn-gold { border: 1px solid #D4AF37; border-radius: 12px; margin-top: 10px; background: rgba(212, 175, 55, 0.05); }
+        .btn-gold:active { background: #D4AF37; color: black; }
+        .hidden { display: none !important; opacity: 0; transform: scale(0.9); }
+        
+        /* Фото в регистрации */
+        .reg-avatar-container { position: relative; width: 150px; height: 150px; margin: 0 auto 25px; }
+        .profile-pic { width: 100%; height: 100%; border-radius: 50%; border: 2px solid #D4AF37; overflow: hidden; background: #222; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
+        .profile-pic:hover { border-width: 4px; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-        
+        .add-icon { position: absolute; bottom: 5px; right: 5px; background: #D4AF37; color: black; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; border: 3px solid #1A1A1A; }
+
+        /* Карточка поиска */
         .swipe-container { position: relative; width: 100%; height: 400px; display: flex; justify-content: center; }
-        .card { width: 100%; height: 100%; background: #222; border-radius: 20px; border: 1px solid #D4AF37; position: absolute; overflow: hidden; touch-action: none; transition: 0.1s; }
+        .card { width: 100%; height: 100%; background: #222; border-radius: 20px; border: 1px solid #D4AF37; position: absolute; overflow: hidden; touch-action: none; }
         .card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         .card.fly-right { transform: translateX(1000px) rotate(30deg) !important; transition: 0.5s; opacity: 0; }
         .card.fly-left { transform: translateX(-1000px) rotate(-30deg) !important; transition: 0.5s; opacity: 0; }
         
-        .rewind-btn { width: 50px; height: 50px; border: 1px solid #D4AF37; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 20px auto 0; cursor: pointer; color: #D4AF37; opacity: 0.2; pointer-events: none; }
-        .rewind-active { opacity: 1; pointer-events: auto; }
-
-        .chat-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #333; text-align: left; cursor: pointer; }
-        #msg-area { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 80px; }
-        .msg { padding: 10px 15px; border-radius: 15px; max-width: 80%; font-size: 14px; }
-        .msg.in { align-self: flex-start; background: #333; }
-        .msg.out { align-self: flex-end; background: #D4AF37; color: black; }
+        .chat-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #333; text-align: left; }
     </style>
 </head>
 <body>
-    <div class="top-bar"><div id="back-icon" class="back-btn" onclick="goBack()">←</div><div style="font-size:10px">AMOR LUX ULTIMATE</div></div>
+    <div class="top-bar"><div id="back-icon" class="back-btn" onclick="goBack()">←</div><div style="font-size:10px; letter-spacing:2px;">AMOR LUX</div></div>
 
     <div id="login-form" class="c">
-        <div class="l">AMOR LUX</div><div class="s">LUXURY DATING</div>
-        <button class="btn-gold" onclick="showScreen('reg-step-1')">ВХОД</button>
-        <button onclick="showScreen('reg-step-1')">РЕГИСТРАЦИЯ</button>
+        <div class="l">AMOR LUX</div><div class="s">ЭЛИТНЫЕ ЗНАКОМСТВА</div>
+        <button class="btn-gold" onclick="showScreen('reg-step-1')">СОЗДАТЬ ПРОФИЛЬ</button>
+        <button onclick="alert('Демо-вход временно недоступен. Используйте регистрацию.')" style="color:#555; margin-top:15px; font-size:11px;">УЖЕ ЕСТЬ АККАУНТ?</button>
     </div>
 
     <div id="reg-step-1" class="c hidden">
-        <div class="l" style="font-size: 24px;">ПРОФИЛЬ</div>
-        <div class="profile-pic" onclick="document.getElementById('file-input').click()">
-            <img id="preview" src="" class="hidden">
-            <span id="placeholder" style="font-size:40px">👤</span>
+        <div class="s" style="margin-bottom:10px;">ШАГ 1: ВАШЕ ФОТО</div>
+        <div class="reg-avatar-container" onclick="document.getElementById('file-input').click()">
+            <div class="profile-pic">
+                <img id="preview" src="" class="hidden">
+                <span id="placeholder" style="font-size:50px; opacity:0.3">👤</span>
+            </div>
+            <div class="add-icon">+</div>
         </div>
         <input type="file" id="file-input" class="hidden" accept="image/*" onchange="loadAvatar(event)">
-        <input type="text" id="reg-name" placeholder="Ваше имя">
-        <button class="btn-gold" onclick="saveProfile()">ЗАВЕРШИТЬ</button>
+        
+        <div class="s" style="margin-bottom:10px;">ШАГ 2: ИМЯ</div>
+        <input type="text" id="reg-name" placeholder="Введите ваше имя">
+        
+        <button class="btn-gold" id="final-reg-btn" onclick="completeRegistration()">ЗАВЕРШИТЬ</button>
     </div>
 
     <div id="profile-screen" class="c hidden">
-        <div class="profile-pic">
-            <img id="main-av" src="" class="hidden">
-            <span id="main-placeholder" style="font-size:40px">👤</span>
+        <div class="reg-avatar-container" style="width:120px; height:120px;">
+            <div class="profile-pic" style="cursor:default;">
+                <img id="main-av" src="" class="hidden">
+                <span id="main-placeholder" style="font-size:40px;">👤</span>
+            </div>
         </div>
-        <div id="dn" style="color:#D4AF37; font-size:20px; letter-spacing: 2px; margin-bottom: 30px;">USER</div>
+        <div id="dn" style="color:#D4AF37; font-size:20px; letter-spacing: 2px; margin-bottom: 30px; text-transform: uppercase;">USER</div>
         <button class="btn-gold" onclick="startSearch()">💎 НАЙТИ ПАРУ</button>
         <button class="btn-gold" onclick="showChats()">✉ СООБЩЕНИЯ (<span id="chat-count">0</span>)</button>
-        <button onclick="location.reload()" style="color:#555; margin-top:20px;">ВЫЙТИ</button>
+        <button onclick="location.reload()" style="color:#555; margin-top:30px; font-size:10px;">ВЫЙТИ ИЗ СИСТЕМЫ</button>
     </div>
 
     <div id="search-screen" class="c hidden">
-        <div class="swipe-container">
-            <div class="card" id="main-card">
-                <img id="card-img" src=""><div style="position:absolute; bottom:0; padding:20px; background:linear-gradient(transparent, black); width:100%; text-align:left; box-sizing:border-box;"><div id="cn" style="color:#D4AF37; font-size:20px;"></div><div id="cc" style="font-size:12px; color:#ccc"></div></div>
-            </div>
-        </div>
-        <div class="rewind-btn" id="rewind-btn" onclick="rewind()">↺</div>
+        <div class="swipe-container"><div class="card" id="main-card"><img id="card-img" src=""><div style="position:absolute; bottom:0; padding:20px; background:linear-gradient(transparent, black); width:100%; text-align:left; box-sizing:border-box;"><div id="cn" style="color:#D4AF37; font-size:20px;"></div><div id="cc" style="font-size:12px; color:#ccc"></div></div></div></div>
+        <div onclick="rewind()" id="rewind-btn" style="margin-top:20px; color:#D4AF37; opacity:0.2; cursor:pointer; font-size:24px;">↺</div>
     </div>
 
     <div id="chat-list-screen" class="c hidden"><div id="chat-items"></div></div>
-
-    <div id="messenger-screen" class="c hidden" style="width: 100%; height: 100%; max-width: 100%;">
-        <div id="msg-area"></div>
-        <div style="padding: 20px; display: flex; gap: 10px; background: #121212;">
-            <input type="text" id="m-input" placeholder="Текст...">
-            <button onclick="sendMsg()" style="width:auto; padding: 0 15px;">></button>
-        </div>
-    </div>
+    <div id="messenger-screen" class="c hidden" style="width:100%; height:100%;"><div id="msg-area"></div></div>
 
     <script>
         let st=['login-form'], matches=[], curU=0, lastU=null, lastAction=null;
@@ -96,21 +96,15 @@
 
         function showScreen(id){
             document.querySelectorAll('.c').forEach(e=>e.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-            // Исправленная логика показа кнопки назад
-            const noBack = ['login-form', 'profile-screen'];
-            document.getElementById('back-icon').style.visibility = noBack.includes(id) ? 'hidden' : 'visible';
+            const next = document.getElementById(id);
+            next.classList.remove('hidden');
+            document.getElementById('back-icon').style.visibility = (id==='login-form'||id==='profile-screen')?'hidden':'visible';
             if(st[st.length-1]!==id)st.push(id);
         }
 
         function goBack(){
             if(st.length>1){
-                st.pop(); 
-                let prev = st[st.length-1];
-                document.querySelectorAll('.c').forEach(e=>e.classList.add('hidden'));
-                document.getElementById(prev).classList.remove('hidden');
-                const noBack = ['login-form', 'profile-screen'];
-                document.getElementById('back-icon').style.visibility = noBack.includes(prev) ? 'hidden' : 'visible';
+                st.pop(); showScreen(st[st.length-1]); st.pop(); // Костыль для корректного пуша в массив при возврате
             }
         }
 
@@ -119,28 +113,35 @@
             if(file){
                 const reader = new FileReader();
                 reader.onload = function(event){
-                    document.querySelectorAll('#preview, #main-av').forEach(img=>{
-                        img.src = event.target.result;
-                        img.classList.remove('hidden');
-                    });
-                    document.querySelectorAll('#placeholder, #main-placeholder').forEach(p=>p.classList.add('hidden'));
+                    const imgs = [document.getElementById('preview'), document.getElementById('main-av')];
+                    const placeholders = [document.getElementById('placeholder'), document.getElementById('main-placeholder')];
+                    imgs.forEach(img => { img.src = event.target.result; img.classList.remove('hidden'); });
+                    placeholders.forEach(p => p.classList.add('hidden'));
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        function saveProfile(){
-            document.getElementById('dn').innerText = (document.getElementById('reg-name').value || "USER").toUpperCase();
-            showScreen('profile-screen');
+        function completeRegistration(){
+            const name = document.getElementById('reg-name').value;
+            if(!name) { alert("Пожалуйста, введите имя"); return; }
+            const btn = document.getElementById('final-reg-btn');
+            btn.innerText = "СОЗДАНИЕ...";
+            setTimeout(() => {
+                document.getElementById('dn').innerText = name.toUpperCase();
+                showScreen('profile-screen');
+                btn.innerText = "ЗАВЕРШИТЬ";
+            }, 800);
         }
 
-        function startSearch(){curU=0; lastU=null; updateCard(); showScreen('search-screen'); initSwipe();}
+        // Логика поиска (свайпы)
+        function startSearch(){ curU=0; updateCard(); showScreen('search-screen'); initSwipe(); }
         function updateCard(){
             const u=users[curU];
             document.getElementById('cn').innerText=u.n;
             document.getElementById('cc').innerText=u.c;
             document.getElementById('card-img').src=u.i;
-            document.getElementById('rewind-btn').classList.toggle('rewind-active', lastU!==null);
+            document.getElementById('rewind-btn').style.opacity = lastU!==null ? "1" : "0.2";
         }
 
         function initSwipe(){
@@ -168,47 +169,34 @@
                 curU=(curU+1)%users.length;
                 updateCard();
                 card.classList.remove('fly-right','fly-left');
-                card.style.transition='none'; card.style.transform='scale(0.9)';
+                card.style.transform='scale(0.9)';
                 setTimeout(()=>{card.style.transition='0.3s'; card.style.transform='';},50);
             },300);
         }
-
+        
         function rewind(){
             if(lastU===null) return;
             if(lastAction==='right') matches.pop();
             document.getElementById('chat-count').innerText=matches.length;
-            curU=lastU; lastU=null;
-            updateCard();
+            curU=lastU; lastU=null; updateCard();
             const card=document.getElementById('main-card');
-            card.style.transition='none'; 
+            card.style.transition='none';
             card.style.transform=lastAction==='right'?'translateX(1000px)':'translateX(-1000px)';
             setTimeout(()=>{card.style.transition='0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'; card.style.transform='translateX(0px) rotate(0deg)';},50);
         }
 
         function showChats(){
             const container=document.getElementById('chat-items');
-            container.innerHTML = matches.length===0?'<div style="margin-top:50px; color:#555">Нет совпадений</div>':'<div class="l" style="font-size:20px; margin:20px 0">ДИАЛОГИ</div>';
+            container.innerHTML = matches.length===0?'<div style="margin-top:100px; color:#555">НЕТ НОВЫХ СИМПАТИЙ</div>':'<div class="l" style="font-size:20px; margin:30px 0">ВАШИ ПАРЫ</div>';
             matches.forEach((u,i)=>{
-                container.innerHTML += `<div class="chat-item" onclick="openChat(${i})">
-                    <img src="${u.i}" style="width:50px; height:50px; border-radius:50%; border:1px solid #D4AF37; margin-right:15px;">
-                    <div style="color:#D4AF37; font-weight:bold;">${u.n}</div>
-                </div>`;
+                container.innerHTML += `<div class="chat-item" onclick="openChat(${i})"><img src="${u.i}" style="width:55px; height:55px; border-radius:50%; border:1px solid #D4AF37; margin-right:15px;"><div style="color:#D4AF37; font-weight:bold;">${u.n}</div></div>`;
             });
             showScreen('chat-list-screen');
         }
 
         function openChat(i){
-            const u = matches[i];
-            document.getElementById('msg-area').innerHTML = `<div class="msg in">Привет! Это ${u.n.split(',')[0]}. Как дела?</div>`;
-            showScreen('messenger-screen');
-        }
-
-        function sendMsg(){
-            const input=document.getElementById('m-input'), area=document.getElementById('msg-area');
-            if(!input.value) return;
-            area.innerHTML += `<div class="msg out">${input.value}</div>`;
-            input.value='';
-            area.scrollTop=area.scrollHeight;
+            const u=matches[i];
+            alert("Переход в чат с " + u.n.split(',')[0]);
         }
     </script>
 </body>
