@@ -3,79 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Amor Lux Elite Registration</title>
+    <title>Amor Lux Elite v11</title>
     <style>
         html, body { height: 100%; margin: 0; padding: 0; background: #1A1A1A; overflow: hidden; display: flex; justify-content: center; align-items: center; color: white; font-family: sans-serif; }
         body::before { content: ""; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 4px double #D4AF37; pointer-events: none; z-index: 10; }
         .top-bar { position: absolute; top: 30px; width: calc(100% - 50px); display: flex; justify-content: space-between; align-items: center; max-width: 320px; color: #D4AF37; z-index: 25; }
         .back-btn { font-size: 28px; cursor: pointer; padding: 10px; visibility: hidden; }
-        .c { width: 100%; max-width: 300px; text-align: center; z-index: 1; position: absolute; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .l { font-size: 32px; color: #D4AF37; letter-spacing: 5px; margin: 0; font-weight: 200; text-transform: uppercase; }
-        .s { color: rgba(212, 175, 55, 0.4); font-size: 10px; letter-spacing: 3px; margin: 5px 0 30px 0; text-transform: uppercase; }
+        .c { width: 100%; max-width: 320px; text-align: center; z-index: 1; position: absolute; transition: 0.5s ease; max-height: 90vh; overflow-y: auto; padding: 20px; box-sizing: border-box; }
+        .l { font-size: 28px; color: #D4AF37; letter-spacing: 5px; margin: 0; font-weight: 200; text-transform: uppercase; }
+        .s { color: rgba(212, 175, 55, 0.4); font-size: 10px; letter-spacing: 3px; margin: 5px 0 20px 0; text-transform: uppercase; }
         
-        /* Стили полей */
-        input { width: 100%; padding: 16px; background: #121212; border: 1px solid #333; border-radius: 12px; color: white; box-sizing: border-box; outline: none; margin-bottom: 15px; transition: 0.3s; }
-        input:focus { border-color: #D4AF37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+        input, select { width: 100%; padding: 14px; background: #121212; border: 1px solid #333; border-radius: 10px; color: white; box-sizing: border-box; outline: none; margin-bottom: 10px; font-size: 14px; transition: 0.3s; }
+        input:focus { border-color: #D4AF37; }
+        
+        .gender-box { display: flex; gap: 10px; margin-bottom: 15px; }
+        .gender-btn { flex: 1; padding: 12px; border: 1px solid #333; border-radius: 10px; cursor: pointer; font-size: 12px; transition: 0.3s; color: #555; }
+        .gender-btn.active { border-color: #D4AF37; color: #D4AF37; background: rgba(212, 175, 55, 0.1); }
         
         button { width: 100%; padding: 15px; background: transparent; border: none; color: #D4AF37; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: 13px; display: block; }
-        .btn-gold { border: 1px solid #D4AF37; border-radius: 12px; margin-top: 10px; background: rgba(212, 175, 55, 0.05); }
-        .btn-gold:active { background: #D4AF37; color: black; }
-        .hidden { display: none !important; opacity: 0; transform: scale(0.9); }
+        .btn-gold { border: 1px solid #D4AF37; border-radius: 10px; margin-top: 10px; }
+        .hidden { display: none !important; }
         
-        /* Фото в регистрации */
-        .reg-avatar-container { position: relative; width: 150px; height: 150px; margin: 0 auto 25px; }
-        .profile-pic { width: 100%; height: 100%; border-radius: 50%; border: 2px solid #D4AF37; overflow: hidden; background: #222; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
-        .profile-pic:hover { border-width: 4px; }
+        .profile-pic { width: 110px; height: 110px; border-radius: 50%; border: 2px solid #D4AF37; margin: 0 auto 15px; overflow: hidden; background: #222; position: relative; cursor: pointer; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-        .add-icon { position: absolute; bottom: 5px; right: 5px; background: #D4AF37; color: black; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; border: 3px solid #1A1A1A; }
-
-        /* Карточка поиска */
-        .swipe-container { position: relative; width: 100%; height: 400px; display: flex; justify-content: center; }
-        .card { width: 100%; height: 100%; background: #222; border-radius: 20px; border: 1px solid #D4AF37; position: absolute; overflow: hidden; touch-action: none; }
-        .card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        .card.fly-right { transform: translateX(1000px) rotate(30deg) !important; transition: 0.5s; opacity: 0; }
-        .card.fly-left { transform: translateX(-1000px) rotate(-30deg) !important; transition: 0.5s; opacity: 0; }
+        .profile-info { text-align: left; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; margin-bottom: 20px; border-left: 2px solid #D4AF37; }
+        .p-label { color: #555; font-size: 10px; text-transform: uppercase; margin-bottom: 2px; }
+        .p-value { color: #D4AF37; font-size: 16px; margin-bottom: 10px; }
         
-        .chat-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #333; text-align: left; }
+        .swipe-container { position: relative; width: 100%; height: 380px; }
+        .card { width: 100%; height: 100%; background: #222; border-radius: 20px; border: 1px solid #D4AF37; position: absolute; overflow: hidden; }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
-    <div class="top-bar"><div id="back-icon" class="back-btn" onclick="goBack()">←</div><div style="font-size:10px; letter-spacing:2px;">AMOR LUX</div></div>
+    <div class="top-bar"><div id="back-icon" class="back-btn" onclick="goBack()">←</div><div style="font-size:10px">AMOR LUX ELITE</div></div>
 
     <div id="login-form" class="c">
-        <div class="l">AMOR LUX</div><div class="s">ЭЛИТНЫЕ ЗНАКОМСТВА</div>
-        <button class="btn-gold" onclick="showScreen('reg-step-1')">СОЗДАТЬ ПРОФИЛЬ</button>
-        <button onclick="alert('Демо-вход временно недоступен. Используйте регистрацию.')" style="color:#555; margin-top:15px; font-size:11px;">УЖЕ ЕСТЬ АККАУНТ?</button>
+        <div class="l">AMOR LUX</div><div class="s">ULTIMATE EXPERIENCE</div>
+        <button class="btn-gold" onclick="showScreen('reg-screen')">РЕГИСТРАЦИЯ</button>
     </div>
 
-    <div id="reg-step-1" class="c hidden">
-        <div class="s" style="margin-bottom:10px;">ШАГ 1: ВАШЕ ФОТО</div>
-        <div class="reg-avatar-container" onclick="document.getElementById('file-input').click()">
-            <div class="profile-pic">
-                <img id="preview" src="" class="hidden">
-                <span id="placeholder" style="font-size:50px; opacity:0.3">👤</span>
-            </div>
-            <div class="add-icon">+</div>
+    <div id="reg-screen" class="c hidden">
+        <div class="l" style="font-size: 20px;">АНКЕТА</div>
+        <div class="s">ЗАПОЛНИТЕ ДАННЫЕ</div>
+        
+        <div class="profile-pic" onclick="document.getElementById('file-input').click()">
+            <img id="preview" src="" class="hidden">
+            <span id="placeholder" style="line-height:110px; font-size:40px; opacity:0.3">👤</span>
         </div>
         <input type="file" id="file-input" class="hidden" accept="image/*" onchange="loadAvatar(event)">
         
-        <div class="s" style="margin-bottom:10px;">ШАГ 2: ИМЯ</div>
-        <input type="text" id="reg-name" placeholder="Введите ваше имя">
+        <input type="text" id="reg-fn" placeholder="Имя">
+        <input type="text" id="reg-ln" placeholder="Фамилия">
+        <input type="text" id="reg-city" placeholder="Город">
+        <input type="number" id="reg-age" placeholder="Возраст">
         
-        <button class="btn-gold" id="final-reg-btn" onclick="completeRegistration()">ЗАВЕРШИТЬ</button>
+        <div class="gender-box">
+            <div class="gender-btn" id="g-male" onclick="setGender('Мужской')">МУЖ</div>
+            <div class="gender-btn" id="g-female" onclick="setGender('Женский')">ЖЕН</div>
+        </div>
+        
+        <button class="btn-gold" onclick="completeRegistration()">СОЗДАТЬ АККАУНТ</button>
     </div>
 
     <div id="profile-screen" class="c hidden">
-        <div class="reg-avatar-container" style="width:120px; height:120px;">
-            <div class="profile-pic" style="cursor:default;">
-                <img id="main-av" src="" class="hidden">
-                <span id="main-placeholder" style="font-size:40px;">👤</span>
-            </div>
+        <div class="profile-pic">
+            <img id="main-av" src="" class="hidden">
+            <span id="main-placeholder" style="line-height:110px; font-size:40px;">👤</span>
         </div>
-        <div id="dn" style="color:#D4AF37; font-size:20px; letter-spacing: 2px; margin-bottom: 30px; text-transform: uppercase;">USER</div>
-        <button class="btn-gold" onclick="startSearch()">💎 НАЙТИ ПАРУ</button>
+        
+        <div class="profile-info">
+            <div class="p-label">Участник</div>
+            <div class="p-value" id="res-name">Имя Фамилия</div>
+            <div class="p-label">Локация и возраст</div>
+            <div class="p-value" id="res-details">Город, 0 лет</div>
+            <div class="p-label">Пол</div>
+            <div class="p-value" id="res-gender">-</div>
+        </div>
+
+        <button class="btn-gold" onclick="startSearch()">💎 ПОИСК ПАРТНЕРОВ</button>
         <button class="btn-gold" onclick="showChats()">✉ СООБЩЕНИЯ (<span id="chat-count">0</span>)</button>
-        <button onclick="location.reload()" style="color:#555; margin-top:30px; font-size:10px;">ВЫЙТИ ИЗ СИСТЕМЫ</button>
+        <button onclick="location.reload()" style="color:#555; margin-top:15px; font-size:10px;">ВЫЙТИ</button>
     </div>
 
     <div id="search-screen" class="c hidden">
@@ -84,10 +92,9 @@
     </div>
 
     <div id="chat-list-screen" class="c hidden"><div id="chat-items"></div></div>
-    <div id="messenger-screen" class="c hidden" style="width:100%; height:100%;"><div id="msg-area"></div></div>
 
     <script>
-        let st=['login-form'], matches=[], curU=0, lastU=null, lastAction=null;
+        let st=['login-form'], matches=[], curU=0, lastU=null, userGender='';
         const users = [
             {n: "Елена, 22", c: "Москва", i: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400"},
             {n: "Анна, 25", c: "Сочи", i: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400"},
@@ -96,45 +103,45 @@
 
         function showScreen(id){
             document.querySelectorAll('.c').forEach(e=>e.classList.add('hidden'));
-            const next = document.getElementById(id);
-            next.classList.remove('hidden');
+            document.getElementById(id).classList.remove('hidden');
             document.getElementById('back-icon').style.visibility = (id==='login-form'||id==='profile-screen')?'hidden':'visible';
             if(st[st.length-1]!==id)st.push(id);
         }
-
-        function goBack(){
-            if(st.length>1){
-                st.pop(); showScreen(st[st.length-1]); st.pop(); // Костыль для корректного пуша в массив при возврате
-            }
-        }
+        function goBack(){ if(st.length>1){ st.pop(); showScreen(st[st.length-1]); st.pop(); } }
 
         function loadAvatar(e){
             const file = e.target.files[0];
             if(file){
                 const reader = new FileReader();
-                reader.onload = function(event){
-                    const imgs = [document.getElementById('preview'), document.getElementById('main-av')];
-                    const placeholders = [document.getElementById('placeholder'), document.getElementById('main-placeholder')];
-                    imgs.forEach(img => { img.src = event.target.result; img.classList.remove('hidden'); });
-                    placeholders.forEach(p => p.classList.add('hidden'));
+                reader.onload = (ev) => {
+                    document.querySelectorAll('#preview, #main-av').forEach(img => { img.src=ev.target.result; img.classList.remove('hidden'); });
+                    document.querySelectorAll('#placeholder, #main-placeholder').forEach(p => p.classList.add('hidden'));
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        function completeRegistration(){
-            const name = document.getElementById('reg-name').value;
-            if(!name) { alert("Пожалуйста, введите имя"); return; }
-            const btn = document.getElementById('final-reg-btn');
-            btn.innerText = "СОЗДАНИЕ...";
-            setTimeout(() => {
-                document.getElementById('dn').innerText = name.toUpperCase();
-                showScreen('profile-screen');
-                btn.innerText = "ЗАВЕРШИТЬ";
-            }, 800);
+        function setGender(g){
+            userGender = g;
+            document.getElementById('g-male').classList.toggle('active', g==='Мужской');
+            document.getElementById('g-female').classList.toggle('active', g==='Женский');
         }
 
-        // Логика поиска (свайпы)
+        function completeRegistration(){
+            const fn = document.getElementById('reg-fn').value;
+            const ln = document.getElementById('reg-ln').value;
+            const city = document.getElementById('reg-city').value;
+            const age = document.getElementById('reg-age').value;
+            
+            if(!fn || !ln || !city || !age || !userGender){ alert("Заполните все поля!"); return; }
+
+            document.getElementById('res-name').innerText = `${fn} ${ln}`;
+            document.getElementById('res-details').innerText = `${city}, ${age} лет`;
+            document.getElementById('res-gender').innerText = userGender;
+            
+            showScreen('profile-screen');
+        }
+
         function startSearch(){ curU=0; updateCard(); showScreen('search-screen'); initSwipe(); }
         function updateCard(){
             const u=users[curU];
@@ -159,8 +166,9 @@
 
         function animateFly(dir){
             const card=document.getElementById('main-card');
-            card.classList.add(dir==='right'?'fly-right':'fly-left');
-            lastU=curU; lastAction=dir;
+            card.style.transition='0.5s';
+            card.style.transform=dir==='right'?'translateX(1000px) rotate(30deg)':'translateX(-1000px) rotate(-30deg)';
+            lastU=curU;
             setTimeout(()=>{
                 if(dir==='right' && !matches.find(u=>u.n===users[curU].n)){
                     matches.push(users[curU]);
@@ -168,35 +176,25 @@
                 }
                 curU=(curU+1)%users.length;
                 updateCard();
-                card.classList.remove('fly-right','fly-left');
-                card.style.transform='scale(0.9)';
+                card.style.transition='none'; card.style.transform='scale(0.9)';
                 setTimeout(()=>{card.style.transition='0.3s'; card.style.transform='';},50);
             },300);
         }
-        
+
         function rewind(){
             if(lastU===null) return;
-            if(lastAction==='right') matches.pop();
-            document.getElementById('chat-count').innerText=matches.length;
             curU=lastU; lastU=null; updateCard();
             const card=document.getElementById('main-card');
-            card.style.transition='none';
-            card.style.transform=lastAction==='right'?'translateX(1000px)':'translateX(-1000px)';
-            setTimeout(()=>{card.style.transition='0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'; card.style.transform='translateX(0px) rotate(0deg)';},50);
+            card.style.transition='0.5s'; card.style.transform='translateX(0)';
         }
 
         function showChats(){
             const container=document.getElementById('chat-items');
-            container.innerHTML = matches.length===0?'<div style="margin-top:100px; color:#555">НЕТ НОВЫХ СИМПАТИЙ</div>':'<div class="l" style="font-size:20px; margin:30px 0">ВАШИ ПАРЫ</div>';
+            container.innerHTML = matches.length===0?'<div style="margin-top:50px; color:#555">НЕТ ПАР</div>':'<div class="l" style="font-size:18px; margin:20px 0">ВАШИ ДИАЛОГИ</div>';
             matches.forEach((u,i)=>{
-                container.innerHTML += `<div class="chat-item" onclick="openChat(${i})"><img src="${u.i}" style="width:55px; height:55px; border-radius:50%; border:1px solid #D4AF37; margin-right:15px;"><div style="color:#D4AF37; font-weight:bold;">${u.n}</div></div>`;
+                container.innerHTML += `<div style="display:flex; align-items:center; padding:15px; border-bottom:1px solid #333; text-align:left;"><img src="${u.i}" style="width:45px; height:45px; border-radius:50%; margin-right:15px; border:1px solid #D4AF37;"><div style="color:#D4AF37">${u.n}</div></div>`;
             });
             showScreen('chat-list-screen');
-        }
-
-        function openChat(i){
-            const u=matches[i];
-            alert("Переход в чат с " + u.n.split(',')[0]);
         }
     </script>
 </body>
