@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Amor Lux Elite v15</title>
+    <title>Amor Lux Elite v17</title>
     <style>
         html, body { height: 100%; margin: 0; padding: 0; background: #1A1A1A; overflow: hidden; display: flex; justify-content: center; align-items: center; color: white; font-family: sans-serif; }
         body::before { content: ""; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 4px double #D4AF37; pointer-events: none; z-index: 10; }
-        .top-bar { position: absolute; top: 30px; width: calc(100% - 50px); display: flex; justify-content: space-between; align-items: center; max-width: 320px; color: #D4AF37; z-index: 25; }
+        
+        /* Исправленная панель навигации */
+        .top-bar { position: absolute; top: 30px; width: calc(100% - 50px); display: flex; justify-content: space-between; align-items: center; max-width: 320px; color: #D4AF37; z-index: 2000; }
         .back-btn { font-size: 28px; cursor: pointer; padding: 10px; visibility: hidden; }
+        
         .c { width: 100%; max-width: 320px; text-align: center; z-index: 1; position: absolute; transition: 0.5s ease; max-height: 90vh; overflow-y: auto; padding: 20px; box-sizing: border-box; }
         .l { font-size: 28px; color: #D4AF37; letter-spacing: 5px; margin: 0; font-weight: 200; text-transform: uppercase; }
         .s { color: rgba(212, 175, 55, 0.4); font-size: 10px; letter-spacing: 3px; margin: 5px 0 20px 0; text-transform: uppercase; }
         
         input { width: 100%; padding: 12px; background: #121212; border: 1px solid #333; border-radius: 10px; color: white; box-sizing: border-box; outline: none; margin-bottom: 8px; font-size: 14px; }
         
-        #city-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1A1A1A; z-index: 1000; display: none; flex-direction: column; padding: 50px 25px; box-sizing: border-box; }
+        #city-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1A1A1A; z-index: 3000; display: none; flex-direction: column; padding: 50px 25px; box-sizing: border-box; }
         .city-item { padding: 18px; border-bottom: 1px solid #222; color: #aaa; cursor: pointer; text-align: left; }
 
         .interests-grid { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 15px; }
@@ -29,25 +32,27 @@
         .profile-pic { width: 90px; height: 90px; border-radius: 50%; border: 2px solid #D4AF37; margin: 0 auto 10px; overflow: hidden; background: #222; display: flex; align-items: center; justify-content: center; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* СВАЙП КАРТОЧКИ */
-        .swipe-container { position: relative; width: 100%; height: 400px; margin-top: 20px; }
-        .card { width: 100%; height: 100%; background: #222; border-radius: 20px; border: 1px solid #D4AF37; position: absolute; overflow: hidden; touch-action: none; }
+        .swipe-container { position: relative; width: 100%; height: 380px; margin-top: 10px; }
+        .card { width: 100%; height: 100%; background: #222; border-radius: 20px; border: 1px solid #D4AF37; position: absolute; overflow: hidden; touch-action: none; z-index: 5; }
         .card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         .card-info { position: absolute; bottom: 0; padding: 20px; background: linear-gradient(transparent, black); width: 100%; text-align: left; box-sizing: border-box; }
     </style>
 </head>
 <body>
-    <div class="top-bar"><div id="back-icon" class="back-btn" onclick="goBack()">←</div><div style="font-size:10px">AMOR LUX</div></div>
+    <div class="top-bar">
+        <div id="back-icon" class="back-btn" onclick="goBack()">←</div>
+        <div style="font-size:10px">AMOR LUX</div>
+    </div>
 
     <div id="city-modal">
-        <div class="l" style="font-size: 20px;">ГОРОД</div>
-        <input type="text" id="city-search" placeholder="Поиск..." autocomplete="off">
+        <div class="l" style="font-size: 20px; margin-bottom: 10px;">ГОРОД</div>
+        <input type="text" id="city-search" placeholder="Поиск города..." autocomplete="off">
         <div id="city-list" style="flex:1; overflow-y:auto;"></div>
-        <button onclick="closeCityModal()">ЗАКРЫТЬ</button>
+        <button onclick="closeCityModal()" style="color:#555">ЗАКРЫТЬ</button>
     </div>
 
     <div id="login-form" class="c">
-        <div class="l">AMOR LUX</div><div class="s">ULTIMATE EXPERIENCE</div>
+        <div class="l">AMOR LUX</div><div class="s">ELITE EXPERIENCE</div>
         <button class="btn-gold" onclick="showScreen('reg-screen')">РЕГИСТРАЦИЯ</button>
     </div>
 
@@ -56,9 +61,13 @@
             <img id="preview" src="" class="hidden"><span id="placeholder" style="font-size:30px; opacity:0.3">👤</span>
         </div>
         <input type="file" id="file-input" class="hidden" accept="image/*" onchange="loadAvatar(event)">
+        
         <input type="text" id="reg-fn" placeholder="Имя">
+        <input type="text" id="reg-ln" placeholder="Фамилия">
         <input type="text" id="reg-city-display" placeholder="Выберите город" readonly onclick="openCityModal()">
         <input type="number" id="reg-age" placeholder="Возраст">
+        
+        <div class="s" style="margin:10px 0 5px 0">ВАШИ ИНТЕРЕСЫ</div>
         <div class="interests-grid" id="reg-interests">
             <div class="tag" onclick="toggleTag(this)">Спорт</div>
             <div class="tag" onclick="toggleTag(this)">Музыка</div>
@@ -70,7 +79,9 @@
 
     <div id="profile-screen" class="c hidden">
         <div class="profile-pic"><img id="main-av" src="" class="hidden"></div>
-        <div id="res-name" style="color:#D4AF37; font-size:18px;"></div>
+        <div id="res-name" style="color:#D4AF37; font-size:18px; font-weight:bold;"></div>
+        <div id="res-details" style="font-size:12px; color:#555; margin-bottom: 15px;"></div>
+        <div class="interests-grid" id="user-tags-display"></div>
         <button class="btn-gold" onclick="startSearch()">💎 ПОИСК</button>
         <button onclick="location.reload()" style="color:#444; margin-top:20px; font-size:10px;">ВЫЙТИ</button>
     </div>
@@ -85,16 +96,15 @@
                 </div>
             </div>
         </div>
-        <div id="swipe-hint" style="margin-top:20px; font-size:10px; color:#555;">← ВЛЕВО (НЕТ) | ВПРАВО (ДА) →</div>
     </div>
 
     <script>
-        let st=['login-form'], matches=[], curU=0, userInterests=[], selectedCity = "";
-        const cities = ["Москва", "Сочи", "Дубай", "Париж", "Лондон", "Казань"];
+        let st=['login-form'], curU=0, selectedCity = "";
+        const citiesList = ["Москва", "Санкт-Петербург", "Сочи", "Дубай", "Лондон", "Париж", "Милан", "Нью-Йорк"];
         const candidates = [
             {n: "Елена, 22", c: "Москва", i: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400"},
             {n: "Анна, 25", c: "Сочи", i: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400"},
-            {n: "Мария, 21", c: "Краснодар", i: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400"}
+            {n: "Кристина, 23", c: "Париж", i: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400"}
         ];
 
         function openCityModal(){
@@ -105,7 +115,7 @@
         function closeCityModal(){ document.getElementById('city-modal').style.display='none'; }
         function renderCities(q){
             const list = document.getElementById('city-list'); list.innerHTML = "";
-            cities.filter(c=>c.toLowerCase().includes(q.toLowerCase())).forEach(city=>{
+            citiesList.filter(c=>c.toLowerCase().includes(q.toLowerCase())).forEach(city=>{
                 const d=document.createElement('div'); d.className="city-item"; d.innerText=city;
                 d.onclick=()=>{ selectedCity=city; document.getElementById('reg-city-display').value=city; closeCityModal(); };
                 list.appendChild(d);
@@ -115,24 +125,50 @@
         function showScreen(id){
             document.querySelectorAll('.c').forEach(e=>e.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
+            
+            // Логика видимости стрелки назад
+            const backBtn = document.getElementById('back-icon');
+            const noBack = ['login-form', 'profile-screen'];
+            backBtn.style.visibility = noBack.includes(id) ? 'hidden' : 'visible';
+            
             if(st[st.length-1]!==id) st.push(id);
         }
-        function goBack(){ if(st.length>1){ st.pop(); showScreen(st[st.length-1]); st.pop(); } }
+
+        function goBack(){
+            if(st.length > 1){
+                st.pop(); // удаляем текущий экран
+                const prev = st[st.length-1];
+                st.pop(); // удаляем, чтобы showScreen не дублировал
+                showScreen(prev);
+            }
+        }
 
         function toggleTag(el){ el.classList.toggle('active'); }
         function loadAvatar(e){
             const file = e.target.files[0];
             if(file){
                 const reader = new FileReader();
-                reader.onload=(ev)=>{ document.querySelectorAll('#preview, #main-av').forEach(img=>{img.src=ev.target.result; img.classList.remove('hidden');}); document.getElementById('placeholder').classList.add('hidden'); };
+                reader.onload=(ev)=>{ 
+                    document.querySelectorAll('#preview, #main-av').forEach(img=>{img.src=ev.target.result; img.classList.remove('hidden');}); 
+                    document.getElementById('placeholder').classList.add('hidden'); 
+                };
                 reader.readAsDataURL(file);
             }
         }
 
         function completeRegistration(){
             const fn=document.getElementById('reg-fn').value;
-            if(!fn || !selectedCity) { alert("Заполните данные!"); return; }
-            document.getElementById('res-name').innerText = fn.toUpperCase();
+            const ln=document.getElementById('reg-ln').value;
+            const age=document.getElementById('reg-age').value;
+            if(!fn || !ln || !selectedCity || !age) { alert("Заполните всё!"); return; }
+            document.getElementById('res-name').innerText = (fn + " " + ln).toUpperCase();
+            document.getElementById('res-details').innerText = `${selectedCity.toUpperCase()}, ${age} ЛЕТ`;
+            
+            const display = document.getElementById('user-tags-display');
+            display.innerHTML = "";
+            document.querySelectorAll('#reg-interests .tag.active').forEach(t => {
+                display.innerHTML += `<div class="tag active">${t.innerText}</div>`;
+            });
             showScreen('profile-screen');
         }
 
